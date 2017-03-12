@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	    http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://code.alibabatech.com/schema/dubbo
+   		http://code.alibabatech.com/schema/dubbo/dubbo.xsd" >
+
+    <!-- 目标zookeeper的配置 -->
+    <dubbo:application name="hull-provider"/>
+    <dubbo:registry address="zookeeper://127.0.0.1:2181" />
+    <!--  伪集群 配置测试 -->
+    <!--<dubbo:registry  protocol="zookeeper"  address="192.9.145.19:2181,192.9.145.19:2182,192.9.145.19:2183"  />-->
+
+    <dubbo:protocol name="dubbo" port="20880" />
+
+    <dubbo:provider retries="0" timeout="10000"/>
+    <!-- 向目标zookeeper注册服务 -->
+    <dubbo:service interface="com.hull.service.TestService" ref="testService"/>
+    <bean id="testService" class="com.hull.service.TestServiceImpl"/>
+
+
+</beans>
